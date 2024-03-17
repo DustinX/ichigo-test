@@ -1,8 +1,8 @@
 {
-  "name": "postgres-starter",
-  "repository": "https://github.com/vercel/examples.git",
+  "name": "Dustin DeHaven Ichigo test",
+  "repository": "https://github.com/DustinX/ichigo-test-backend",
   "license": "MIT",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -24,7 +24,6 @@
     "postcss": "8.4.31",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "tailwindcss": "3.3.3",
     "typescript": "5.2.2"
   }
 }
