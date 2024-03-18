@@ -13,6 +13,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ insertedData }, { status: 200 });
   } catch (e) {
+    console.log(e);
     return NextResponse.json({ e }, { status: 500 });
   }
 }
