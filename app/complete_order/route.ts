@@ -1,4 +1,5 @@
 import { sql } from "@vercel/postgres";
+import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   console.log("Start complete_order");
@@ -7,11 +8,13 @@ export async function POST(request: Request) {
 
   const body = JSON.parse(bodyString);
 
+  // TODOd add error catch
+
   const insertedData = await complete_order(body);
 
   console.log("%cinsertedData:", "color:yellow", insertedData);
 
-  return insertedData;
+  return NextResponse.json({ insertedData }, { status: 200 });
 }
 
 export type CompleteOrderArgs = {
