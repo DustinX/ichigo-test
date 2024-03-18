@@ -4,17 +4,17 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   console.log("Start complete_order");
 
-  const bodyString = await request.text();
+  try {
+    const bodyString = await request.text();
 
-  const body = JSON.parse(bodyString);
+    const body = JSON.parse(bodyString);
 
-  // TODOd add error catch
+    const insertedData = await complete_order(body);
 
-  const insertedData = await complete_order(body);
-
-  console.log("%cinsertedData:", "color:yellow", insertedData);
-
-  return NextResponse.json({ insertedData }, { status: 200 });
+    return NextResponse.json({ insertedData }, { status: 200 });
+  } catch (e) {
+    return NextResponse.json({ e }, { status: 500 });
+  }
 }
 
 export type CompleteOrderArgs = {
@@ -45,5 +45,5 @@ export async function complete_order(completeOrderArgs: CompleteOrderArgs) {
   );
   `;
 
-  return { customers, orders };
+  return { customers: customers.rowCount, orders: orders.rowCount };
 }
