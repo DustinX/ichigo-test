@@ -46,5 +46,35 @@ export async function complete_order(completeOrderArgs: CompleteOrderArgs) {
   );
   `;
 
+  // NOTE:  There is a SQL database function and trigger that runs whenever a new order is added, and recalculates the customer's "total spent" field.
+
+  /**
+   *   
+    CREATE OR REPLACE FUNCTION update_customer_total_spent()
+    RETURNS TRIGGER AS $$
+    BEGIN
+        -- Calculate the total spent and update the customers table
+        UPDATE customers
+        SET total_spent = (
+            SELECT SUM(order_total_in_cents)
+            FROM orders
+            WHERE customer_id = NEW.customer_id
+        )
+        WHERE customer_id = NEW.customer_id;
+        
+        RETURN NEW;
+    END;
+    $$ LANGUAGE plpgsql;
+   */
+
+  /**
+     
+    CREATE TRIGGER trigger_update_customer_spent
+    AFTER INSERT ON orders
+    FOR EACH ROW
+    EXECUTE FUNCTION update_customer_total_spent();
+
+    */
+
   return { customers: customers.rowCount, orders: orders.rowCount };
 }
