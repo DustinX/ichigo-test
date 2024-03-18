@@ -1,17 +1,49 @@
+import { sql } from "@vercel/postgres";
+
 export async function POST() {
-  console.log("Dustin2");
+  console.log("Start complete_order");
 
-  // const res = await fetch('https://data.mongodb-api.com/...', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'API-Key': process.env.DATA_API_KEY!,
-  //   },
-  //   body: JSON.stringify({ time: new Date().toISOString() }),
-  // })
+  // TODOd get this from api params
+  // commit first
+  const insertedData = complete_order({
+    customerId: "123",
+    customerName: "Taro Suzuki",
+    orderId: "T123",
+    totalInCents: 3450,
+    date: "2022-03-04T05:29:59.850Z",
+  });
 
-  // const data = await res.json()
-  const data = { dustin: 1 };
+  console.log("%cinsertedData:", "color:yellow", insertedData);
 
-  return Response.json(data);
+  return insertedData;
+}
+
+export type CompleteOrderArgs = {
+  customerId: string;
+  customerName: string;
+  orderId: string;
+  totalInCents: number;
+  date: string;
+};
+
+export async function complete_order(completeOrderArgs: CompleteOrderArgs) {
+  // TODOd use the userId to not just create a new entry for every query
+  //   const customers = await sql`
+  //   INSERT INTO customers (customer_name)
+  //   VALUES ('${completeOrderArgs.customerName}')
+  // `;
+  const customers = await sql`
+  INSERT INTO customers (customer_id, customer_name)
+  SELECT ${completeOrderArgs.customerId}, '${completeOrderArgs.customerName}'
+  WHERE NOT EXISTS (
+      SELECT 1 FROM users WHERE customer_id = ${completeOrderArgs.customerId}
+  );
+`;
+
+  const orders = await sql`
+INSERT INTO orders (customer_id, order_date, order_total_in_cents, order_other_id)
+VALUES ('${completeOrderArgs.customerId}','${completeOrderArgs.date}', '${completeOrderArgs.totalInCents}', '${completeOrderArgs.orderId}' )
+`;
+
+  return { customers, orders };
 }
