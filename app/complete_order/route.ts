@@ -34,9 +34,9 @@ export async function complete_order(completeOrderArgs: CompleteOrderArgs) {
   // `;
   const customers = await sql`
   INSERT INTO customers (customer_id, customer_name)
-  SELECT ${completeOrderArgs.customerId}, '${completeOrderArgs.customerName}'
+  SELECT '${completeOrderArgs.customerId}', '${completeOrderArgs.customerName}'
   WHERE NOT EXISTS (
-      SELECT 1 FROM users WHERE customer_id = ${completeOrderArgs.customerId}
+      SELECT 1 FROM customers WHERE customer_id = '${completeOrderArgs.customerId}'
   );
 `;
 
