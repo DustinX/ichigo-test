@@ -26,9 +26,6 @@ export async function complete_order(completeOrderArgs: CompleteOrderArgs) {
   const customer_id = completeOrderArgs.customerId;
   const customer_name = completeOrderArgs.customerName;
 
-  console.log("%ccustomerId:", "color:yellow", customer_id);
-  console.log("%ccustomerName:", "color:yellow", customer_name);
-
   const customers = await sql`
       INSERT INTO customers (customer_id, customer_name)
       SELECT ${customer_id}, ${customer_name}
@@ -37,13 +34,13 @@ export async function complete_order(completeOrderArgs: CompleteOrderArgs) {
       );
   `;
 
-  //   const orders = await sql`
-  //     INSERT INTO orders (customer_id, order_date, order_total_in_cents, order_other_id)
-  //     SELECT '${completeOrderArgs.customerId}','${completeOrderArgs.date}', ${completeOrderArgs.totalInCents}, '${completeOrderArgs.orderId}'
-  //     WHERE NOT EXISTS (
-  //     SELECT 1 FROM orders WHERE order_other_id = '${completeOrderArgs.orderId}'
-  // );
-  // `;
+  const orders = await sql`
+      INSERT INTO orders (customer_id, order_date, order_total_in_cents, order_other_id)
+      SELECT ${completeOrderArgs.customerId},${completeOrderArgs.date}, ${completeOrderArgs.totalInCents}, ${completeOrderArgs.orderId}
+      WHERE NOT EXISTS (
+      SELECT 1 FROM orders WHERE order_other_id = ${completeOrderArgs.orderId}
+  );
+  `;
 
-  // return { customers, orders };
+  return { customers, orders };
 }
