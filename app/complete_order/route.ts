@@ -42,7 +42,10 @@ export async function complete_order(completeOrderArgs: CompleteOrderArgs) {
 
   const orders = await sql`
 INSERT INTO orders (customer_id, order_date, order_total_in_cents, order_other_id)
-VALUES ('${completeOrderArgs.customerId}','${completeOrderArgs.date}', '${completeOrderArgs.totalInCents}', '${completeOrderArgs.orderId}' )
+SELECT '${completeOrderArgs.customerId}','${completeOrderArgs.date}', ${completeOrderArgs.totalInCents}, '${completeOrderArgs.orderId}'
+WHERE NOT EXISTS (
+    SELECT 1 FROM orders WHERE order_other_id = '${completeOrderArgs.orderId}'
+);
 `;
 
   return { customers, orders };
