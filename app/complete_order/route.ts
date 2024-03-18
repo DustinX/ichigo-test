@@ -4,7 +4,6 @@ export async function POST() {
   console.log("Start complete_order");
 
   // TODOd get this from api params
-  // commit first
   const insertedData = complete_order({
     customerId: "123",
     customerName: "Taro Suzuki",
@@ -27,23 +26,18 @@ export type CompleteOrderArgs = {
 };
 
 export async function complete_order(completeOrderArgs: CompleteOrderArgs) {
-  // TODOd use the userId to not just create a new entry for every query
-  //   const customers = await sql`
-  //   INSERT INTO customers (customer_name)
-  //   VALUES ('${completeOrderArgs.customerName}')
-  // `;
   const customers = await sql`
-  INSERT INTO customers (customer_id, customer_name)
-  SELECT '${completeOrderArgs.customerId}', '${completeOrderArgs.customerName}'
-  WHERE NOT EXISTS (
-      SELECT 1 FROM customers WHERE customer_id = '${completeOrderArgs.customerId}'
-  );
+    INSERT INTO customers (customer_id, customer_name)
+    SELECT '${completeOrderArgs.customerId}', '${completeOrderArgs.customerName}'
+    WHERE NOT EXISTS (
+        SELECT 1 FROM customers WHERE customer_id = '${completeOrderArgs.customerId}'
+    );
 `;
 
   const orders = await sql`
-INSERT INTO orders (customer_id, order_date, order_total_in_cents, order_other_id)
-SELECT '${completeOrderArgs.customerId}','${completeOrderArgs.date}', ${completeOrderArgs.totalInCents}, '${completeOrderArgs.orderId}'
-WHERE NOT EXISTS (
+    INSERT INTO orders (customer_id, order_date, order_total_in_cents, order_other_id)
+    SELECT '${completeOrderArgs.customerId}','${completeOrderArgs.date}', ${completeOrderArgs.totalInCents}, '${completeOrderArgs.orderId}'
+    WHERE NOT EXISTS (
     SELECT 1 FROM orders WHERE order_other_id = '${completeOrderArgs.orderId}'
 );
 `;
