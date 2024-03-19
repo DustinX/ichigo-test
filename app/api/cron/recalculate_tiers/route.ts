@@ -43,13 +43,13 @@ DECLARE
 BEGIN
     FOR customer_record IN SELECT DISTINCT customer_id FROM orders LOOP
         WITH spent_calculation AS (
-            SELECT customer_id, SUM(order_total_in_cents) AS calculated_total_spent
+            SELECT customer_id, COALESCE(SUM(order_total_in_cents), 0) AS calculated_total_spent
             FROM orders
             WHERE customer_id = customer_record.customer_id
             AND order_date >= date_trunc('year', CURRENT_DATE - INTERVAL '1 year') -- Considering orders from the start of LAST year, since the new year just started
             GROUP BY customer_id
           ), spent_calculation_this_year AS (
-            SELECT customer_id, SUM(order_total_in_cents) AS calculated_total_spent
+            SELECT customer_id, COALESCE(SUM(order_total_in_cents), 0) AS calculated_total_spent
             FROM orders
             WHERE customer_id = customer_record.customer_id
             AND order_date >= date_trunc('year', CURRENT_DATE) -- Orders after the start of CURRENT year

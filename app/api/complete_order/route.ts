@@ -56,12 +56,12 @@ export async function complete_order(completeOrderArgs: CompleteOrderArgs) {
         -- Calculate the total spent 
         
         WITH spent_calculation AS (
-          SELECT SUM(order_total_in_cents) AS calculated_total_spent
+          SELECT COALESCE(SUM(order_total_in_cents), 0) AS calculated_total_spent
           FROM orders
           WHERE customer_id = NEW.customer_id
           AND order_date >= date_trunc('year', CURRENT_DATE - INTERVAL '1 year') -- Orders after the start of LAST year
         ), spent_calculation_this_year AS (
-          SELECT SUM(order_total_in_cents) AS calculated_total_spent
+          SELECT COALESCE(SUM(order_total_in_cents), 0) AS calculated_total_spent
           FROM orders
           WHERE customer_id = NEW.customer_id
           AND order_date >= date_trunc('year', CURRENT_DATE) -- Orders after the start of CURRENT year
