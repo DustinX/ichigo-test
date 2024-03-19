@@ -14,7 +14,7 @@ export async function GET(request: Request) {
 
   try {
     const customerOrdersRaw = await get_customer_orders(customer_id);
-    const customerOrders = customerOrdersRaw.customer.rows;
+    const customerOrders = customerOrdersRaw.customerOrders.rows;
     console.log("Complete get_customer_orders");
     console.log(customerOrders);
 
