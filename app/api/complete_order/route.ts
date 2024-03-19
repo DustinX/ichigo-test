@@ -60,12 +60,18 @@ export async function complete_order(completeOrderArgs: CompleteOrderArgs) {
           FROM orders
           WHERE customer_id = NEW.customer_id
           AND order_date >= date_trunc('year', CURRENT_DATE - INTERVAL '1 year') -- Orders after the start of LAST year
+        ), spent_calculation_this_year AS (
+          SELECT SUM(order_total_in_cents) AS calculated_total_spent
+          FROM orders
+          WHERE customer_id = NEW.customer_id
+          AND order_date >= date_trunc('year', CURRENT_DATE) -- Orders after the start of CURRENT year
         )
         
         -- Use calculated_total_spent to set field total_spent and determine current_tier 
 
         UPDATE customers
         SET total_spent = (SELECT calculated_total_spent FROM spent_calculation),
+            total_spent_this_year = (SELECT calculated_total_spent FROM spent_calculation_this_year),
             current_tier = CASE
                 WHEN (SELECT calculated_total_spent FROM spent_calculation) BETWEEN 0 AND 9999 THEN 'BRONZE'
                 WHEN (SELECT calculated_total_spent FROM spent_calculation) BETWEEN 10000 AND 49999 THEN 'SILVER'
