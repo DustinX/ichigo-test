@@ -30,7 +30,7 @@ export async function get_customer_info(customer_id: string) {
       SELECT 
         current_tier,
         
-        date_trunc('year', CURRENT_DATE - INTERVAL '1 year') AS date_cutoff,
+        date_trunc('year', CURRENT_DATE - INTERVAL '1 year') AT TIME ZONE 'UTC' AS date_cutoff,
         
         total_spent,
         
@@ -46,7 +46,7 @@ export async function get_customer_info(customer_id: string) {
         WHEN total_spent_this_year >= 50000 THEN 'GOLD'
       END  AS tier_next_year,
       
-      date_trunc('year', CURRENT_DATE + INTERVAL '1 year' - INTERVAL '1 second') AS downgrade_date,
+      (date_trunc('year', CURRENT_DATE + INTERVAL '1 year') - INTERVAL '1 second') AT TIME ZONE 'UTC' AS downgrade_date,
       
       CASE
         WHEN current_tier = 'BRONZE' THEN 5
