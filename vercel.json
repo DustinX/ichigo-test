@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/cron/recalculate_tiers",
-      "schedule": "59 23 31 12 *"
+      "schedule": "0 0 1 1 *"
     }
   ]
 }

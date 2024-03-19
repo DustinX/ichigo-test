@@ -46,7 +46,7 @@ BEGIN
             SELECT customer_id, SUM(order_total_in_cents) AS total_spent
             FROM orders
             WHERE customer_id = customer_record.customer_id
-            AND order_date >= date_trunc('year', CURRENT_DATE) -- Considering orders from the start of the current year
+            AND order_date >= date_trunc('year', CURRENT_DATE - INTERVAL '1 year') -- Considering orders from the start of LAST year, since the new year just started
             GROUP BY customer_id
         )
         UPDATE customers
