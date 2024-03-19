@@ -59,6 +59,7 @@ export async function complete_order(completeOrderArgs: CompleteOrderArgs) {
           SELECT SUM(order_total_in_cents) AS calculated_total_spent
           FROM orders
           WHERE customer_id = NEW.customer_id
+          AND order_date > date_trunc('year', CURRENT_DATE) -- Orders after the start of the current year
         )
         
         -- Use calculated_total_spent to set field total_spent and determine current_tier 
