@@ -67,9 +67,9 @@ export async function complete_order(completeOrderArgs: CompleteOrderArgs) {
         UPDATE customers
         SET total_spent = (SELECT calculated_total_spent FROM spent_calculation),
             current_tier = CASE
-                WHEN (SELECT calculated_total_spent FROM spent_calculation) BETWEEN 0 AND 9900 THEN 'BRONZE'
-                WHEN (SELECT calculated_total_spent FROM spent_calculation) BETWEEN 100 AND 49900 THEN 'SILVER'
-                WHEN (SELECT calculated_total_spent FROM spent_calculation) > 49900 THEN 'GOLD'
+                WHEN (SELECT calculated_total_spent FROM spent_calculation) BETWEEN 0 AND 9999 THEN 'BRONZE'
+                WHEN (SELECT calculated_total_spent FROM spent_calculation) BETWEEN 10000 AND 49999 THEN 'SILVER'
+                WHEN (SELECT calculated_total_spent FROM spent_calculation) >= 50000 THEN 'GOLD'
             END
         WHERE customers.customer_id = NEW.customer_id;
         
