@@ -22,6 +22,7 @@ export type CustomerInfo = {
     date_cutoff: string;
     total_spent: number;
     cents_till_next_tier: number;
+    next_tier_cents_required: number;
     tier_next_year: string;
     downgrade_date: string;
     cents_to_maintain_tier_next_year: number;
@@ -45,6 +46,15 @@ export default async function CustomerInfoPage({
 
   const customerInfo = data.customerInfo[0] || {};
 
+  let percentToNextTier = 0;
+  if (customerInfo.next_tier_cents_required === 0) {
+    percentToNextTier = 100;
+  } else {
+    percentToNextTier = Math.round(
+      (customerInfo.total_spent / customerInfo.next_tier_cents_required) * 100
+    );
+  }
+
   return (
     <div className="customer-info">
       <h2>Customer Information</h2>
@@ -56,6 +66,15 @@ export default async function CustomerInfoPage({
           </li>
         ))}
       </ul>
+      <div className="progress-bar">
+        <p>Progress towards next tier: {percentToNextTier}%</p>
+        <div
+          className="progress-bar-fill"
+          style={{
+            width: `${percentToNextTier}%`,
+          }}
+        ></div>
+      </div>
     </div>
   );
 }

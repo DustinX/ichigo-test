@@ -25,3 +25,16 @@
 .customer-info ul li strong {
   color: #333;
 }
+
+.progress-bar {
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  height: 20px;
+}
+
+.progress-bar-fill {
+  background-color: #007bff;
+  height: 100%;
+  border-radius: 4px;
+}

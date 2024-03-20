@@ -40,6 +40,12 @@ export async function get_customer_info(customer_id: string) {
       END  AS cents_till_next_tier,
       
       CASE
+        WHEN current_tier = 'BRONZE' THEN 10000
+        WHEN current_tier = 'SILVER' THEN 50000
+        WHEN current_tier = 'GOLD' THEN 0
+      END  AS next_tier_cents_required,
+      
+      CASE
         WHEN total_spent_this_year BETWEEN 0 AND 9999 THEN 'BRONZE'
         WHEN total_spent_this_year BETWEEN 10000 AND 49999 THEN 'SILVER'
         WHEN total_spent_this_year >= 50000 THEN 'GOLD'
