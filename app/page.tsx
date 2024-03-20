@@ -15,7 +15,7 @@ export default function Home() {
       </Suspense>
 
       <Link
-        href="https://github.com/vercel/examples/tree/main/storage/postgres-starter"
+        href="https://github.com/DustinX/ichigo-test"
         className="flex items-center space-x-2"
       >
         <Image
