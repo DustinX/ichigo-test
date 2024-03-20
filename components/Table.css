@@ -1,0 +1,23 @@
+.customers {
+  padding: 20px;
+}
+
+.customers-heading {
+  margin-bottom: 20px;
+}
+
+.customers-heading h2 {
+  color: #333;
+  font-size: 24px;
+}
+
+.customers-heading p {
+  color: #666;
+  font-size: 14px;
+  padding: 10px 0;
+}
+
+.customers-container {
+  display: flex;
+  flex-direction: column;
+}

@@ -9,10 +9,15 @@
   box-sizing: border-box;
 }
 
-html {
+p {
   margin: 0;
   padding: 0;
+}
+
+html {
   height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 body {

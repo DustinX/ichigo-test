@@ -1,6 +1,7 @@
 import { sql } from "@vercel/postgres";
 import RefreshButton from "./refresh-button";
 import Customer from "components/Customer";
+import "./Table.css";
 
 export type CustomerData = {
   rows: any[];
@@ -28,15 +29,15 @@ export default async function Table() {
   const duration = Date.now() - startTime;
 
   return (
-    <div>
-      <div>
+    <div className="customers">
+      <div className="customers-heading">
         <h2>Customers</h2>
         <p>
           Fetched {customers.length} customers in {duration}ms
         </p>
         <RefreshButton />
       </div>
-      <div>
+      <div className="customers-container">
         {customers.map((customer) => (
           <Customer key={customer.customer_id} customer={customer} />
         ))}
