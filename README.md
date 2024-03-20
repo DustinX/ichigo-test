@@ -88,8 +88,8 @@ Recalculating tiers is done by a PostgreSQL function. This function is triggered
 
 There is another endpoint that recalculates all customers. This is triggered via a cron job at the start of each year. This endpoint requires authentication to successfully trigger.
 
-### Other notes
+### Limitations due to time
 
 The CSS styling is very simple. In a real project I would use a component library like MUI, and a CSS library like tailwind. The focus of this project for me was on functionality and clean code.
 
-Edge cases are considered to some degree, but not exhaustively, for the sake of time.
+Edge cases are considered to some degree, but not exhaustively.
