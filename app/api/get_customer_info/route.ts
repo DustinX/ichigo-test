@@ -36,7 +36,7 @@ export async function get_customer_info(customer_id: string) {
       CASE
         WHEN current_tier = 'BRONZE' THEN 10000 - total_spent
         WHEN current_tier = 'SILVER' THEN 50000 - total_spent
-        WHEN current_tier = 'GOLD' THEN NULL
+        WHEN current_tier = 'GOLD' THEN 0
       END  AS cents_till_next_tier,
       
       CASE
