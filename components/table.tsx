@@ -20,7 +20,7 @@ export default async function Table() {
       FROM customers
     `) as CustomerData;
   } catch (e: any) {
-    console.log(e);
+    console.error(e);
   }
 
   const { rows: customers } = data;

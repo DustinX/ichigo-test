@@ -2,7 +2,7 @@ import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
-  console.log("Start get_customer_info");
+  console.info("Start get_customer_info");
 
   const { searchParams } = new URL(request.url);
 
@@ -15,12 +15,11 @@ export async function GET(request: Request) {
   try {
     const customerInfoRaw = await get_customer_info(customer_id);
     const customerInfo = customerInfoRaw.customer.rows;
-    console.log("Complete get_customer_info");
-    console.log(customerInfo);
+    console.info("Complete get_customer_info");
 
     return NextResponse.json({ customerInfo }, { status: 200 });
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return NextResponse.json({ e }, { status: 500 });
   }
 }

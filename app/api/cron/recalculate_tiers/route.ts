@@ -4,10 +4,10 @@ import { NextResponse, NextRequest } from "next/server";
 export async function GET(req: NextRequest, res: NextResponse) {
   const authHeader = req.headers.get("authorization");
 
-  console.log("Start recalculate_tiers");
+  console.info("Start recalculate_tiers");
 
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    console.log("Unauthorized recalculate_tiers");
+    console.error("Unauthorized recalculate_tiers");
 
     return new Response("Unauthorized", {
       status: 401,
@@ -17,11 +17,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
   try {
     recalculateTiers();
 
-    console.log("Complete recalculate_tiers");
+    console.info("Complete recalculate_tiers");
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return NextResponse.json({ e }, { status: 500 });
   }
 }

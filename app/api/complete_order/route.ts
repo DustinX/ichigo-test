@@ -2,7 +2,7 @@ import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  console.log("Start complete_order");
+  console.info("Start complete_order");
 
   try {
     const bodyString = await request.text();
@@ -13,7 +13,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ insertedData }, { status: 200 });
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return NextResponse.json({ e }, { status: 500 });
   }
 }
