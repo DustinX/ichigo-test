@@ -1,66 +1,54 @@
-import { sql } from '@vercel/postgres'
-import { timeAgo } from '@/lib/utils'
-import Image from 'next/image'
-import RefreshButton from './refresh-button'
-import { seed } from '@/lib/seed'
+import { sql } from "@vercel/postgres";
+import RefreshButton from "./refresh-button";
+
+export type CustomerData = {
+  rows: any[];
+};
 
 export default async function Table() {
-  let data
-  let startTime = Date.now()
+  let data: CustomerData = { rows: [] };
+  let startTime = Date.now();
 
   try {
-    data = await sql`SELECT * FROM users`
+    data = (await sql`
+      SELECT 
+        customer_name,
+        total_spent,
+        current_tier
+      FROM customers
+    `) as CustomerData;
   } catch (e: any) {
-    if (e.message.includes('relation "users" does not exist')) {
-      console.log(
-        'Table does not exist, creating and seeding it with dummy data now...'
-      )
-      // Table is not created yet
-      await seed()
-      startTime = Date.now()
-      data = await sql`SELECT * FROM users`
-    } else {
-      throw e
-    }
+    console.log(e);
   }
 
-  const { rows: users } = data
-  const duration = Date.now() - startTime
+  console.log("%cdata:", "color:yellow", data);
+
+  const { rows: customers } = data;
+  const duration = Date.now() - startTime;
 
   return (
     <div className="bg-white/30 p-12 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg max-w-xl mx-auto w-full">
       <div className="flex justify-between items-center mb-4">
-        <div className="space-y-1">
-          <h2 className="text-xl font-semibold">Recent Users</h2>
-          <p className="text-sm text-gray-500">
-            Fetched {users.length} users in {duration}ms
-          </p>
-        </div>
+        <h2>Customers</h2>
+        <p>
+          Fetched {customers.length} customers in {duration}ms
+        </p>
         <RefreshButton />
       </div>
       <div className="divide-y divide-gray-900/5">
-        {users.map((user) => (
+        {customers.map((customer) => (
           <div
-            key={user.name}
+            key={customer.name}
             className="flex items-center justify-between py-3"
           >
-            <div className="flex items-center space-x-4">
-              <Image
-                src={user.image}
-                alt={user.name}
-                width={48}
-                height={48}
-                className="rounded-full ring-1 ring-gray-900/5"
-              />
-              <div className="space-y-1">
-                <p className="font-medium leading-none">{user.name}</p>
-                <p className="text-sm text-gray-500">{user.email}</p>
-              </div>
+            <div className="space-y-1">
+              <p className="font-medium leading-none">
+                {customer.customer_name}
+              </p>
             </div>
-            <p className="text-sm text-gray-500">{timeAgo(user.createdAt)}</p>
           </div>
         ))}
       </div>
     </div>
-  )
+  );
 }
