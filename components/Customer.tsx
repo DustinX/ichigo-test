@@ -12,9 +12,7 @@ const Customer = ({ customer }: CustomerProps) => {
       <Link href={`./customer_info/${customer.customer_id}`}>
         <p>Customer Info</p>
       </Link>
-      <Link
-        href={`./customer_order_history?customer_id=${customer.customer_id}`}
-      >
+      <Link href={`./customer_order_history/${customer.customer_id}`}>
         <p>Customer Orders</p>
       </Link>
     </div>
