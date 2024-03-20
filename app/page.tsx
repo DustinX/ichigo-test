@@ -7,6 +7,7 @@ import "./page.css";
 
 export const runtime = "edge";
 export const preferredRegion = "home";
+export const dynamic = "force-dynamic"; // turn off caching for this page
 
 export default function Home() {
   return (

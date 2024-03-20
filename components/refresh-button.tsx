@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { revalidatePath } from "next/cache";
 
 export default function RefreshButton() {
   const router = useRouter();
@@ -12,7 +11,6 @@ export default function RefreshButton() {
     <button
       disabled={isPending}
       onClick={() => {
-        revalidatePath(`/`, "page");
         startTransition(() => {
           router.refresh();
         });
