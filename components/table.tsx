@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 import RefreshButton from "./refresh-button";
-import Customer from "components/Customer";
+import Customer from "./Customer";
 import "./Table.css";
 
 export type CustomerData = {
