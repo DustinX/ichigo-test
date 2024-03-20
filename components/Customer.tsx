@@ -9,7 +9,7 @@ const Customer = ({ customer }: CustomerProps) => {
   return (
     <div key={customer.customer_id} className={styles.customer}>
       <p>{customer.customer_name}</p>
-      <Link href={`./customer_info?customer_id=${customer.customer_id}`}>
+      <Link href={`./customer_info/${customer.customer_id}`}>
         <p>Customer Info</p>
       </Link>
       <Link
