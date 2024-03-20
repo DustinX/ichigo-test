@@ -25,7 +25,7 @@ export async function GET(request: Request) {
   }
 }
 
-export async function get_customer_orders(customer_id: string) {
+async function get_customer_orders(customer_id: string) {
   const customerOrders = await sql`
       SELECT
         order_other_id,

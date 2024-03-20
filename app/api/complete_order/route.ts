@@ -18,7 +18,7 @@ export async function POST(request: Request) {
   }
 }
 
-export type CompleteOrderArgs = {
+type CompleteOrderArgs = {
   customerId: string;
   customerName: string;
   orderId: string;
@@ -26,7 +26,7 @@ export type CompleteOrderArgs = {
   date: string;
 };
 
-export async function complete_order(completeOrderArgs: CompleteOrderArgs) {
+async function complete_order(completeOrderArgs: CompleteOrderArgs) {
   const customer_id = completeOrderArgs.customerId;
   const customer_name = completeOrderArgs.customerName;
 

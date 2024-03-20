@@ -26,7 +26,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   }
 }
 
-export async function recalculateTiers() {
+async function recalculateTiers() {
   const recalculateTiers = await sql`SELECT recalculate_customer_tiers();`;
 
   return recalculateTiers;

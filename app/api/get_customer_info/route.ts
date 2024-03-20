@@ -24,7 +24,7 @@ export async function GET(request: Request) {
   }
 }
 
-export async function get_customer_info(customer_id: string) {
+async function get_customer_info(customer_id: string) {
   const customerInfo = await sql`
       SELECT
         customer_name,
