@@ -1,6 +1,8 @@
 import React from "react";
 import "./page.css";
 
+export const dynamic = "force-dynamic"; // turn off caching for this page
+
 async function getCustomerOrders(customer_id: string) {
   const urlPrefix = process.env.API_URL;
 
