@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
-import Table from "components/Table";
-import TablePlaceholder from "components/table-placeholder";
+import Table from "@/components/Table";
+import TablePlaceholder from "@/components/table-placeholder";
 import "./page.css";
 
 export const runtime = "edge";
