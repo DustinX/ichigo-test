@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import Table from "@/components/table";
 import TablePlaceholder from "@/components/table-placeholder";
+import "./page.css";
 
 export const runtime = "edge";
 export const preferredRegion = "home";
@@ -16,7 +17,8 @@ export default function Home() {
 
       <Link
         href="https://github.com/DustinX/ichigo-test"
-        className="flex items-center space-x-2"
+        className="link"
+        target="_blank"
       >
         <Image
           src="/github.svg"
@@ -25,7 +27,6 @@ export default function Home() {
           height={24}
           priority
         />
-        <p className="font-light">Source</p>
       </Link>
     </main>
   );
