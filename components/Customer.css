@@ -8,4 +8,16 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: min-content;
+  min-width: 300px;
+}
+
+.BRONZE::before {
+  content: "🥉";
+}
+.SILVER::before {
+  content: "🥈";
+}
+.GOLD::before {
+  content: "🥇";
 }

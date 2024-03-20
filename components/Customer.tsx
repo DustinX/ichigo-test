@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from "components/Customer.module.css";
+import "./Customer.css";
 
 type CustomerProps = {
   customer: any;
@@ -7,8 +7,8 @@ type CustomerProps = {
 
 const Customer = ({ customer }: CustomerProps) => {
   return (
-    <div key={customer.customer_id} className={styles.customer}>
-      <p>{customer.customer_name}</p>
+    <div key={customer.customer_id} className="customer">
+      <p className={customer.current_tier}>{customer.customer_name}</p>
       <Link href={`./customer_info/${customer.customer_id}`}>
         <p>Customer Info</p>
       </Link>
