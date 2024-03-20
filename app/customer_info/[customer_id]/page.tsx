@@ -18,6 +18,7 @@ async function getCustomerInfo(customer_id: string) {
 
 export type CustomerInfo = {
   customerInfo: {
+    customer_name: string;
     current_tier: string;
     date_cutoff: string;
     total_spent: number;

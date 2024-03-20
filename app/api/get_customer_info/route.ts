@@ -26,7 +26,8 @@ export async function GET(request: Request) {
 
 export async function get_customer_info(customer_id: string) {
   const customerInfo = await sql`
-      SELECT 
+      SELECT
+        customer_name,
         current_tier,
         
         date_trunc('year', CURRENT_DATE - INTERVAL '1 year') AT TIME ZONE 'UTC' AS date_cutoff,
