@@ -12,7 +12,7 @@ export default function RefreshButton() {
     <button
       disabled={isPending}
       onClick={() => {
-        revalidatePath(`https://ichigo-test.vercel.app/`);
+        revalidatePath(`/`, "page");
         startTransition(() => {
           router.refresh();
         });
