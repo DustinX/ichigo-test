@@ -88,6 +88,8 @@ Recalculating tiers is done by a PostgreSQL function. This function is triggered
 
 There is another endpoint that recalculates all customers. This is triggered via a cron job at the start of each year. This endpoint requires authentication to successfully trigger.
 
+Route caching is disabled so that the demo is as responsive as possible to changes in the database. In a real production app, cache revalidation would probably set to some reasonable time.
+
 ### Limitations due to time
 
 The CSS styling is very simple. In a real project I would use a component library like MUI, and a CSS library like tailwind. The focus of this project for me was on functionality and clean code.
