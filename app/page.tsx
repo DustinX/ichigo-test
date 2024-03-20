@@ -6,14 +6,10 @@ import TablePlaceholder from "@/components/table-placeholder";
 
 export const runtime = "edge";
 export const preferredRegion = "home";
-export const dynamic = "force-dynamic";
 
 export default function Home() {
   return (
     <main>
-      <Link href="https://vercel.com/templates/next.js/postgres-starter">
-        <p>Customer Info</p>
-      </Link>
       <Suspense fallback={<TablePlaceholder />}>
         <Table />
       </Suspense>
